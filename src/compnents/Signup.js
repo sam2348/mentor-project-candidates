@@ -6,7 +6,7 @@
   const validationSchema = yup.object({
         firstName: yup
           .string('Enter your First Name')
-          .matches(/^[A-Za-z][A-Za-z0-9_]{7,29}$/)
+          .matches(/^[a-zA-Z ]{2,}$/)
           .required('First Name is required'),
         email: yup
           .string('Enter your email')
@@ -14,7 +14,7 @@
           .matches(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
         lastName: yup
           .string('Enter your Last Name')
-          .matches(/^[A-Za-z][A-Za-z0-9_]{7,29}$/)
+          .matches(/^[a-zA-Z]{2,}$/)
           .required('Last Name is required'),
         password: yup
           .string('Enter your password')
@@ -70,6 +70,7 @@
           })
         }}
         >
+        {({ errors, touched }) => (
         <Form className="mt-8 space-y-4 ">
         <div className="mt-8 space-y-4 rounded-md shadow-sm">
           <div>
@@ -77,9 +78,12 @@
             <Field id="firstName" name='firstName' type="text" autoComplete="off" 
               className={`relative block w-full appearance-none rounded-none rounded-t-md 
               border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:
-              border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm ${! ? " " : "border-red-500"}`} 
-              placeholder="First Name"  />
+              border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm ${!errors.firstName ? " " : "border-red-500"}`} 
+              placeholder="First Name" />
               <ErrorMessage class="decoration-zinc-900" name="firstName" />
+              {errors.firstName && touched.firstName ? (
+              <div>{errors.firstName}</div>
+              ) : null}
           </div>
           <div>
             <label htmlFor="lastName" className="sr-only">Last Name</label>
@@ -109,6 +113,7 @@
           </button>
         </div>
       </Form>
+       )}
       </Formik>
     </div>
   </div>
